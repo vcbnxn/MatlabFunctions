@@ -1,6 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%Log-likelihood function.
-%
+%%Log likelihood function.
+%Based on Kullback's taken from "Texture Classification by Combining Local
+%Binary Pattern Features and a Self-Organizing Map", Turtinen et al.
+
 %Structure as required by knnsearch.m:
 %                                   function D2 = DISTFUN(ZI, ZJ),
 %  
@@ -11,28 +13,20 @@
 %                                   M2-by-1 vector of distances D2, whose
 %                                   Jth element is the distance between the
 %                                   observations ZI and ZJ(J,:).
-%
+
 %Takes two vectors.
-%
-%jjr6@aber.ac.uk
-%19/02/2014
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ L ] = LogLikelihood(sample, models)
-    B = length(sample);
-    
-    if size(models, 2)~= B
-        error('Mismatched vector lengths!');
-    end
-    
+    B = length(sample);    
     
     model_count = size(models,1);
     L = zeros(model_count, 1);
     
-    %compare the sample to each model
+    %compare the sample to each model.. need to get rid of this time consuming for loop
     for m=1:model_count
         model = models(m,:);
-        L(m) = 2.*(sum((sample.*log(sample+eps)) - (sample.*log(model+eps))));
+        L(m) = sum(sample .* log(model+eps));
     end
     
 end
