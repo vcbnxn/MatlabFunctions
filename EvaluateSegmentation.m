@@ -18,7 +18,7 @@
 %%04/09/2014
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [ true_positive_rate, false_positive_rate, true_negative_rate, false_negative_rate, accuracy, dice] = EvaluateSegmentation( image, t_mask, other_mask )
+function [ true_positive_rate, false_positive_rate, accuracy, dice] = EvaluateSegmentation( image, t_mask, other_mask )
     % just in case the mask isn't logical
     other_mask = logical(other_mask);
     t_mask = logical(t_mask);
@@ -37,10 +37,9 @@ function [ true_positive_rate, false_positive_rate, true_negative_rate, false_ne
     
     
 	%rates
-    true_positive_rate = true_positives / (true_positives + false_positives);    
-    false_positive_rate = false_positives / (false_positives + true_positives);    
-    true_negative_rate = true_negatives /  (false_negatives + true_negatives);    
-    false_negative_rate = false_negatives / (true_negatives + false_negatives);
+    true_positive_rate = true_positives / (true_positives + false_negatives);    
+    false_positive_rate = false_positives / (true_negatives + false_positives);
+    
     
 	%accuracy
     accuracy = (true_positives + true_negatives) / (true_positives + true_negatives + false_positives + false_negatives); %correctly classified / total number of to find
